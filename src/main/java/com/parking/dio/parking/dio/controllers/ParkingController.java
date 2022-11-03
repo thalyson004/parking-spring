@@ -2,22 +2,53 @@ package com.parking.dio.parking.dio.controllers;
 
 import com.parking.dio.parking.dio.models.Parking;
 import com.parking.dio.parking.dio.services.ParkingService;
-import org.hibernate.mapping.Collection;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 @RestController
 @RequestMapping("/parking")
 public class ParkingController {
+    private final ParkingService parkingService;
 
+    public ParkingController(ParkingService parkingService) {
+        this.parkingService = parkingService;
+    }
     @GetMapping
-    public List<Parking> getAll(){
-        return ParkingService.findAll();
+    @ApiOperation("Find all parkings")
+    public ResponseEntity<List<Parking>> findAll() {
+        return ResponseEntity.ok(parkingService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Parking> findById(@PathVariable String id) {
+
+        return ResponseEntity.ok(parkingService.findById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable String id) {
+        parkingService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Parking> create(@RequestBody Parking p) {
+        var parking = parkingService.create(p);
+        return ResponseEntity.status(HttpStatus.CREATED).body(parking);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Parking> update(@PathVariable String id, @RequestBody Parking parking) {
+        parking = parkingService.update(id, parking);
+        return ResponseEntity.ok(parking);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Parking> checkOut(@PathVariable String id) {
+        return ResponseEntity.ok(parkingService.checkOut(id));
     }
 }

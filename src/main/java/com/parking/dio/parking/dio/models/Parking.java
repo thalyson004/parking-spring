@@ -1,64 +1,95 @@
 package com.parking.dio.parking.dio.models;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
-
+@Entity
 public class Parking {
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SequenceParkingId")
-    @SequenceGenerator(name = "SequenceParkingId", sequenceName = "PARKING_ID")
-     */
-    private static int countParking;
-    private int id;
-    private String name;
-    private int remain;
-    private int total;
 
-    static {
-        countParking=0;
+    @Id
+    private String id;
+    private String license;
+    private String state;
+    private String model;
+    private String color;
+    private LocalDateTime entryDate;
+    private LocalDateTime exitDate;
+    private Double bill;
+
+    public Parking(String id, String license, String state, String model, String color) {
+        this.id = id;
+        this.license = license;
+        this.state = state;
+        this.model = model;
+        this.color = color;
     }
 
-    public int getId() {
+    public Parking() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLicense() {
+        return license;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLicense(String license) {
+        this.license = license;
     }
 
-    public int getRemain() {
-        return remain;
+    public String getState() {
+        return state;
     }
 
-    public void setRemain(int remain) {
-        this.remain = remain;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public int getTotal() {
-        return total;
+    public String getModel() {
+        return model;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public Parking(String name, int remain, int total) {
-        this.id = Parking.countParking++;
-        this.name = name;
-        this.remain = remain;
-        this.total = total;
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public LocalDateTime getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDateTime entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public LocalDateTime getExitDate() {
+        return exitDate;
+    }
+
+    public void setExitDate(LocalDateTime exitDate) {
+        this.exitDate = exitDate;
+    }
+
+    public Double getBill() {
+        return bill;
+    }
+
+    public void setBill(Double bill) {
+        this.bill = bill;
     }
 
 
